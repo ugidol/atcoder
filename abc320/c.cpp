@@ -19,7 +19,7 @@ unsigned int spin(vector<string> &reels, char c){
   if ( distance(reels.begin(),itr) == 3 ) {
     return t;
   }
-  return ~0;
+  return UINT_MAX;
 }
 int main(void){
   int M;
@@ -35,7 +35,7 @@ int main(void){
     {S3,S1,S2},
   };
   //
-  unsigned int ans = ~0;
+  unsigned int ans = UINT_MAX;
   vector<char> cs = {'0','1','2','3','4','5','6','7','8','9'};
   for(auto c : cs){
     for(auto ptn:ptns){
