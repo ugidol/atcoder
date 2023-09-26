@@ -13,5 +13,5 @@ https://atcoder.jp/contests/abc143/tasks/abc143_d
 
 * [解説1](https://atcoder.jp/contests/abc143/editorial/652)
   * 定数倍でもTLEにならない、とのこと
-[解説2](https://blog.hamayanhamayan.com/entry/2019/10/19/224640_2)
+* [解説2](https://blog.hamayanhamayan.com/entry/2019/10/19/224640_2)
   * distanceではなく累積和を使うとのこと
