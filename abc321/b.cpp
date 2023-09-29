@@ -14,11 +14,7 @@ int main(void){
     sort(tmp.begin(), tmp.end());
     tmp.erase(tmp.begin());
     tmp.erase(tmp.end()-1);
-    int sm = 0;
-    for(auto itr:tmp){
-      sm += itr;
-    }
-    vec[i] = sm;
+    vec[i] = accumulate(tmp.begin(), tmp.end(), 0);
   }
   int ans = -1;
   for(int i=0;i<=100;i++){
