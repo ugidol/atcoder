@@ -24,3 +24,8 @@ https://atcoder.jp/contests/abc322/tasks/abc322_d
 * 時間切れ
 * 二次元配列の回転が咄嗟にかけるようになりたい！
 * TLEの理由は後日考える
+
+[解説](https://atcoder.jp/contests/abc322/editorial/7302)
+
+* P1は固定してもよいとのこと
+* 確かに固定したらTLEじゃなくなった
