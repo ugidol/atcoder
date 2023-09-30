@@ -68,21 +68,6 @@ int main(void){
       }
     }
   }
-  vector<vector<vector<char>>> P1(4,vector<vector<char>>(4,vector<char>(4,'.')));
-  vector<vector<vector<char>>> P2(4,vector<vector<char>>(4,vector<char>(4,'.')));
-  vector<vector<vector<char>>> P3(4,vector<vector<char>>(4,vector<char>(4,'.')));
-  P1[0] = P[0];
-  for(int i=1;i<4;i++){
-    rotate(P1[i-1],P1[i]);
-  }
-  P2[0] = P[1];
-  for(int i=1;i<4;i++){
-    rotate(P2[i-1],P2[i]);
-  }
-  P3[0] = P[2];
-  for(int i=1;i<4;i++){
-    rotate(P3[i-1],P3[i]);
-  }
   vector<vector<char>> p1 = P[0];
   vector<vector<char>> p2 = P[1];
   vector<vector<char>> p3 = P[2];
@@ -97,11 +82,20 @@ int main(void){
               pair<int,int> pos3 = {i3,j3};
               //
               for(int r1=0;r1<4;r1++){
+                vector<vector<char>> g1 = p1;
+                rotate(p1,g1);
                 for(int r2=0;r2<4;r2++){
+                  vector<vector<char>> g2 = p2;
+                  rotate(p2,g2);
                   for(int r3=0;r3<4;r3++){
-                    paste(P1[r1],pos1,P2[r2],pos2,P3[r3],pos3);
+                    vector<vector<char>> g3 = p3;
+                    rotate(p3,g3);
+                    paste(p1,pos1,p2,pos2,p3,pos3);
+                    p3 = g3;
                   }
+                  p2 = g2;
                 }
+                p1 = g1;
               }
             }
           }
