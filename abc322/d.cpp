@@ -8,11 +8,29 @@ void copy(vector<vector<char>> &src, vector<vector<char>> &dest){
   }
   return ;
 }
-void rotate(vector<vector<char>> &g){
-  vector<vector<char>> p = g;
+void rotate90R(vector<vector<char>> &g){
+  vector<vector<char>> src = g;
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
-      g[i][j] = p[4-1-j][i];
+      g[i][j] = src[4-1-j][i];
+    }
+  }
+  return ;
+}
+void rotate180(vector<vector<char>> &g){
+  vector<vector<char>> src = g;
+  for(int i=0;i<4;i++){
+    for(int j=0;j<4;j++){
+      g[i][j] = src[4-1-i][4-1-j];
+    }
+  }
+  return ;
+}
+void rotate90L(vector<vector<char>> &g){
+  vector<vector<char>> src = g;
+  for(int i=0;i<4;i++){
+    for(int j=0;j<4;j++){
+      g[i][j] = src[j][4-1-i];
     }
   }
   return ;
@@ -92,38 +110,29 @@ int main(void){
   vector<vector<vector<char>>> P1(4,vector<vector<char>>(4,vector<char>(4,'.')));
   for(int i=0;i<4;i++){
     copy(P[0], P1[i]);
-    for(int j=0;j<i;j++){
-      rotate(P1[i]);
-    }
-#ifdef DEBUG
-    //dump(P1[i],{0,0});
-#endif 
   }
+  rotate90R(P1[1]);
+  rotate180(P1[2]);
+  rotate90L(P1[3]);
   vector<vector<vector<char>>> P2(4,vector<vector<char>>(4,vector<char>(4,'.')));
   for(int i=0;i<4;i++){
     copy(P[1], P2[i]);
-    for(int j=0;j<i;j++){
-      rotate(P2[i]);
-    }
-#ifdef DEBUG
-    //dump(P2[i],{0,0});
-#endif 
   }
+  rotate90R(P2[1]);
+  rotate180(P2[2]);
+  rotate90L(P2[3]);
   vector<vector<vector<char>>> P3(4,vector<vector<char>>(4,vector<char>(4,'.')));
   for(int i=0;i<4;i++){
     copy(P[2], P3[i]);
-    for(int j=0;j<i;j++){
-      rotate(P3[i]);
-    }
-#ifdef DEBUG
-    //dump(P3[i],{0,0});
-#endif 
   }
+  rotate90R(P3[1]);
+  rotate180(P3[2]);
+  rotate90L(P3[3]);
   /*
-  vector<vector<char>> &p1 = P1[0];
-  vector<vector<char>> &p2 = P2[3];
+  vector<vector<char>> &p1 = P1[3];
+  vector<vector<char>> &p2 = P2[1];
   vector<vector<char>> &p3 = P3[0];
-  paste(p1,{2,3},p2,{4,2},p3,{3,4});
+  paste(p1,{3,3},p2,{3,3},p3,{3,3});
   */
 
   for(int i1=0;i1<7;i1++){
