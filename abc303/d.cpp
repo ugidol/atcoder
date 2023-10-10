@@ -11,26 +11,20 @@ int main(void){
     char c = S[i-1];
     if ( c == 'a' ) {
       dp[i][0] = min({dp[i-1][0]+X    ,
-                      dp[i-1][1]+Y+Z  , 
                       dp[i-1][1]+Z+X});
 
-      dp[i][1] = min({dp[i-1][0]+X+Z  , 
-                      dp[i-1][0]+Z+Y  ,
-                      dp[i-1][1]+Y    ,
-                      dp[i-1][1]+Z+X+Z});
+      dp[i][1] = min({dp[i-1][0]+Z+Y  ,
+                      dp[i-1][1]+Y    });
     }
     else if ( c == 'A' ) {
-      dp[i][0] = min({dp[i-1][0]+Y    , 
-                      dp[i-1][0]+Z+X+Z,
-                      dp[i-1][1]+X+Z  ,
+      dp[i][0] = min({dp[i-1][0]+Y    ,
                       dp[i-1][1]+Z+Y  });
 
       dp[i][1] = min({dp[i-1][0]+Z+X  ,
-                      dp[i-1][0]+Y+Z  ,
                       dp[i-1][1]+X    });
     }
 #ifdef DEBUG
-//  fprintf(stderr,"dp[%d]{%lld,%lld}\n",i,dp[i][0],dp[i][1]);
+  fprintf(stderr,"dp[%d]{%lld,%lld}\n",i,dp[i][0],dp[i][1]);
 #endif
   }
   long long ans = min(dp[S.size()][0],dp[S.size()][1]);
