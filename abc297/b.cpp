@@ -3,33 +3,13 @@ using namespace std;
 int main(void){
   string S;
   cin >> S;
-  int B_xy = 0;
-  for(int i=0;i<(int)S.size();i++){
-    char c = S[i];
-    if ( c == 'B' ) {
-      B_xy += i;
-    }
-  }
-  bool first = false;
-  if ( B_xy % 2 == 1 ) {
-    first = true;
-  }
-  bool second = false;
-  bool in_R = false ;
-  for(int i=0;i<(int)S.size();i++){
-    char c = S[i];
-    if ( c == 'R' ) {
-      in_R = ! in_R;
-    }
-    else if ( c == 'K' ) {
-      if ( in_R ) {
-        second = true;
-        break;
-      }
-    }
-  }
-  string ans = "No";
-  if ( first && second ) {
+  size_t x = S.find("B");
+  size_t y = S.find("B",x+1);
+  size_t xx = S.find("R");
+  size_t yy = S.find("R",xx+1);
+  size_t k = S.find("K");
+  string ans="No";
+  if ( (x + y)%2==1 && xx < k && k < yy ) {
     ans = "Yes";
   }
   cout << ans << endl;
