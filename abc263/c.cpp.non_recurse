@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(void){
+  int N,M;
+  cin >> N >> M;
+  stack<vector<int>> stk;
+  vector<vector<int>> ans;
+  vector<int> vec(0);
+  stk.push(vec);
+  while(!stk.empty()){
+    vector<int> vec = stk.top();stk.pop();
+    if ( (int)vec.size() == N ) {
+      ans.push_back(vec);
+      continue;
+    }
+    int v = 0;
+    if ( vec.size() > 0 ) {
+      v = vec[ vec.size()-1 ];
+    }
+    for(int i=M;i>v;i--){
+      vector<int> v(vec);
+      v.push_back(i);
+      stk.push(v);
+    }
+  }
+  //
+  for(auto v:ans){
+    for(auto itr:v){
+      cout << itr << ' ';
+    }
+    cout << endl;
+  }
+  return 0;
+}

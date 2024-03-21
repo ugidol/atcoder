@@ -1,44 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
-void dfs(set<int> &st, vector<set<int>> &G, vector<bool> &visited, int n){
-  visited[n] = true;
-  if ( G[n].size() == 0 ) {
-    st.insert(n);
-    return ;
-  }
-  else {
-    for(auto itr : G[n]){
-      if ( visited[itr] ) {
-        ;
-      }
-      else {
-        dfs(st,G,visited,itr);
-      }
-    }
-  }
-}
 int main(void){
   int N,M;
   cin >> N >> M;
-  vector<set<int>> G(N+1);
+  vector<vector<int>> G(N,vector<int>());
   for(int i=0;i<M;i++){
     int A,B;
     cin >> A >> B;
-    G[B].insert(A);
+    A -= 1;
+    B -= 1;
+    G[B].push_back(A);
   }
-  vector<bool> visited(N+1);
+  //
   set<int> st;
+  function<void(int)> dfs = [&](int v){
+    set<int> visited;
+    stack<int> stk;
+    stk.push(v);
+    while( ! stk.empty() ) {
+      int n = stk.top();stk.pop();
+      visited.insert(n);
+      vector<int> &nodes = G[n];
+      if ( nodes.size() == 0 ) {
+        st.insert(n);
+      }
+      else {
+        for(auto n:nodes){
+          if ( visited.count(n) > 0 ) {
+            continue;
+          }
+          stk.push(n);
+        }
+      }
+    }
+    return ;
+  };
   for(int i=0;i<N;i++){
-    if ( visited[i+1] ) {
-      ;
-    }
-    else {
-      dfs(st,G,visited,i+1);
-    }
+    dfs(i);
   }
   int ans = -1;
   if ( st.size() == 1 ) {
     ans = *st.begin();
+    ans += 1;
   }
   cout << ans << endl;
   return 0;
