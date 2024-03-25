@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
@@ -6,26 +7,18 @@ int main(void){
   vector<int> W(N);
   vector<int> X(N);
   for(int i=0;i<N;i++){
-    int w,x;
-    cin >> w >> x;
-    W[i] = w;
-    X[i] = x;
+    cin >> W[i] >> X[i];
   }
-  //
-  //
   int ans = 0;
-  for(int i=0;i<24;i++){
-    int sm = 0;
-    for(int j=0;j<N;j++){
-      int x = ( X[j] + i ) % 24;
-      if ( x >= 9 && x < 18 ) {
-        sm += W[j];
+  for(int t=0;t<=24;t++){
+    int x = 0;
+    for(int i=0;i<N;i++){
+      int y = ( X[i] + t ) % 24 ;
+      if ( y >= 9 && y < 18 ) {
+        x += W[i];
       }
     }
-#ifdef DEBUG
-    fprintf(stderr,"%d,%d\n",i,sm);
-#endif
-    ans = max(ans,sm);
+    ans = max(ans,x);
   }
   cout << ans << endl;
   return 0;
