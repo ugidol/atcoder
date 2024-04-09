@@ -1,42 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-set<pair<int,int>> st;
-
-void func(const pair<int,int> &a, const pair<int,int> &b){
-  /*
-  printf("(%d,%d)->(%d,%d)=",a.first, a.second, b.first, b.second);
-  printf("(%d,%d)",a.first - b.first, a.second - b.second ) ;
-  */
-  int gs = gcd(a.first - b.first, a.second - b.second );
-  /*
-  printf("%d:",a1);
-  printf("(%d,%d)\n",(a.first - b.first)/a1, (a.second - b.second)/a1 ) ;
-  */
-  pair<int,int> p = make_pair((a.first - b.first)/gs, (a.second - b.second)/gs ) ;
-  st.insert(p);
-  pair<int,int> p1 = make_pair((b.first - a.first)/gs, (b.second - a.second)/gs ) ;
-  st.insert(p1);
-  return ;
-}
-
 int main(void){
-  int n ;
-  cin >> n ;
+  int n;
+  cin >> n;
   vector<pair<int,int>> vec(n);
   for(int i=0;i<n;i++){
-    int x , y;
-    cin >> x >> y ;
+    int x,y;
+    cin >> x >> y;
     pair<int,int> p = make_pair(x,y);
     vec[i] = p;
   }
-  for(int i=0;i<n-1;i++){
-    pair<int,int> a = vec[i];
-    for(int j=i+1;j<n;j++){
+  /*
+   * ２つの座標の距離を計算
+   * x座標,y座標の最大公約数を計算
+   * 各座標を最大公約数で割る
+   */
+  function<pair<int,int>(pair<int,int>,pair<int,int>)> f = [&](pair<int,int> a, pair<int,int> b){
+    int c = a.first - b.first ;
+    int d = a.second - b.second;
+    int v = gcd(c,d);
+    c /= v;
+    d /= v;
+    pair<int,int> p = make_pair(c,d);
+    return p;
+  };
+  set<pair<int,int>> st;
+  /*
+   * 街同士の組み合わせ
+   */
+  for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+      /*
+       * 同じ街は考慮不要
+       */
+      if ( i == j ) {
+        continue;
+      }
+      pair<int,int> a = vec[i];
       pair<int,int> b = vec[j];
-      func(a,b);
+      pair<int,int> d = f(a,b);
+      st.insert(d);
     }
   }
-  cout << st.size()  << endl;
+  int ans = st.size();
+  cout << ans << endl;
   return 0;
 }
