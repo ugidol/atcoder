@@ -1,53 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef struct {
+  int f;
+  int s;
+} DATA;
 int main(void){
   int N;
   cin >> N;
-  map<int,int> mp;
-  map<int,multiset<int>> mp2;
+  vector<DATA> vec(N);
   for(int i=0;i<N;i++){
     int F,S;
     cin >> F >> S;
-    if ( mp[F] < S ) {
-      mp[F] = S;
-    }
-    mp2[F].insert(S);
-    if ( mp2[F].size() > 2 ) {
-      mp2[F].erase(mp2[F].begin());
-    }
+    DATA d = {F,S};
+    vec[i] = d;
   }
-  multiset<int> mp3;
-  for(auto itr : mp){
-    mp3.insert( itr.second );
-    if ( mp3.size() > 2 ) {
-      mp3.erase(mp3.begin());
-    }
+  /*
+   * フレーバー毎の美味しさの最大値を求める.
+   */
+  int ans = 0;
+  vector<int> vec01(N+1);
+  for(auto d:vec){
+    vec01[ d.f ] = max(vec01[d.f],d.s);
   }
-  int a = 0;
-  for(auto itr : mp3){
-    a += itr;
+  sort(vec01.begin(), vec01.end());
+  reverse(vec01.begin(), vec01.end());
+  // フレーバーの数が2種類以上の場合のみ、満足度を計算する.
+  if ( vec01.size() > 1 ) {
+    ans = max(ans, vec01[0] + vec01[1] );
   }
-  //
-  int b = 0;
-  for(auto itr : mp2){
-    int f,v1,v2;
-    f = itr.first;
-    if ( itr.second.size() < 2 ) {
+  /*
+   * 同じフレーバーの満足度の大きいほう２つを求める.
+   * a[0] : 小さいほう(t)
+   * a[1] : 大きいほう(s)
+   */
+  vector<array<int,2>> vec02(N+1,array<int,2>());
+  for(auto d:vec){
+    array<int,2> &ary = vec02[d.f];
+    // 小さいかったら、処理しない
+    if ( d.s < ary[0] ) {
       continue;
     }
-    int sm = 0;
-    auto itr2 = itr.second.begin();
-    v1 = *itr2;
-    sm += ( v1 / 2 );
-    advance(itr2,1);
-    v2 = *itr2;
-    sm += v2;
-    b = max(b,sm);
-#ifdef DEBUG
-    fprintf(stderr,"f=[%d],v1=[%d],v2=[%d]\n",f,v1,v2);
-#endif
+    // いったん小さいほうを塗り替える.
+    ary[0] = d.s;
+    // 順番が逆転していたら、入れ替える.
+    if ( ary[0] > ary[1] ) {
+      swap(ary[0],ary[1]);
+    }
   }
-  int ans = max(a,b);
+  /*
+   * 各フレーバーにつて、
+   * 同じフレーバーの満足度の大きいほう２つの合計値を求める.
+   */
+  for(auto a:vec02){
+    // 美味しさが０の場合,アイスクリームが１個しかないので処理しない
+    if ( a[0] <= 0 ) {
+      continue;
+    }
+    // 満足度の計算
+    int t = a[0];
+    int s = a[1];
+    ans = max(ans, s + (t/2) );
+  }
   cout << ans << endl;
   return 0;
 }
