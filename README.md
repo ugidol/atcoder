@@ -10,3 +10,7 @@ atcoder用
 
 ## abc348 D
 * BFS / DFS
+
+## abc264 D 
+### "redocta".swap(i,i+1)
+* BFS, Fenwick Tree, Binary Indexed Tree, Bubble Sort
