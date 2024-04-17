@@ -1,41 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
+//
 typedef struct {
-  int idx;
-  long value;
+  int idx;    //
+  long value; //
 } DATA;
 int main(void){
+  // INPUT
   int N;
   cin >> N;
   vector<DATA> A(N);
   for(int i=0;i<N;i++){
     cin >> A[i].value;
   }
+  // solve
   DATA base = {0,0};
   int Q;
   cin >> Q;
   vector<long> ans;
-  for(int i=0;i<Q;i++){
+  for(int i=1;i<=Q;i++){
     int q;
     cin >> q;
     if ( q == 1 ) {
       long x;
       cin >> x;
-      base.idx = i+1;
+      base.idx = i;
       base.value = x;
     }
     else if ( q == 2 ) {
       int idx;
-      cin >> idx;
+      long x;
+      cin >> idx >> x ;
       idx -= 1;
-      long x ;
-      cin >> x;
+      A[idx].idx = i;
       if ( A[idx].idx < base.idx ) {
-        A[idx].idx = i+1;
         A[idx].value = x;
       }
       else {
-        A[idx].idx = i+1;
         A[idx].value += x;
       }
     }
@@ -43,14 +44,14 @@ int main(void){
       int idx;
       cin >> idx;
       idx -= 1;
-      if ( A[idx].idx < base.idx ) {
-        ans.push_back(base.value);
+      long value = base.value;
+      if ( base.idx < A[idx].idx ) {
+        value += A[idx].value;
       }
-      else {
-        ans.push_back(base.value + A[idx].value);
-      }
+      ans.push_back(value);
     }
   }
+  // answer
   for(auto itr:ans){
     cout << itr << endl;
   }
