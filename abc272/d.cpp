@@ -70,10 +70,7 @@ int main(void){
 			Point p = que.front();que.pop();
 			for(auto v:vec){
 				Point pp = p + v;
-				if ( pp.x < 0 || pp.x >= N ) {
-					continue;
-				}
-				if ( pp.y < 0 || pp.y >= N ) {
+				if ( ! ( pp >= Point(0,0) && pp < Point(N,N) ) ) {
 					continue;
 				}
 				if ( visited[pp.x][pp.y] != -1 ) {
