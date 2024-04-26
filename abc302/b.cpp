@@ -1,89 +1,89 @@
 #include <bits/stdc++.h>
 using namespace std;
-string func(char a, char b, char c, char d, char e){
-  string ret = "";
-  ret += a;
-  ret += b;
-  ret += c;
-  ret += d;
-  ret += e;
-  return ret;
+
+struct Point {
+  int x,y;
+  Point():x(0),y(0){};
+  Point(int a, int b){
+    x = a;
+    y = b;
+  }
+  Point(const Point& p){
+    x = p.x;
+    y = p.y;
+  }
+  Point& operator=(const Point& r){
+    x = r.x;
+    y = r.y;
+    return *this;
+  };
+  Point& operator+=(const Point& r){
+    x += r.x;
+    y += r.y;
+    return *this;
+  };
+};
+
+std::ostream& operator<<(std::ostream& os, const Point& p){
+  os << '{' << p.x << ',' << p.y << '}' ;
+  return os;
 }
+bool operator <  (const Point& l, const Point& r){ return ( l.x < r.x ) && ( l.y < r.y ) ; } ;
+bool operator >  (const Point& l, const Point& r){ return ( l.x > r.x ) && ( l.y > r.y ) ; } ;
+bool operator <= (const Point& l, const Point& r){ return ( l.x <= r.x ) && ( l.y <= r.y ) ; } ;
+bool operator >= (const Point& l, const Point& r){ return ( l.x >= r.x ) && ( l.y >= r.y ) ; } ;
+bool operator == (const Point &l, const Point& r){ return ( l.x == r.x && l.y == r.y ) ; }
+bool operator != (const Point &l, const Point& r){ return ( ! ( l == r ) ) ; }
+Point operator+(const Point& l, const Point& r) { 
+  Point ret(l);
+  ret += r;
+  return ret;
+};
+
 int main(void){
-  int H,W;
-  cin >> H >> W ;
-  vector<string> S(H);
-  for(int i=0;i<H;i++){
-    string s;
-    cin >> s;
-    S[i] = s;
-  }
-  //
-  for(int i=0;i<H;i++){
-    for(int j=0;j<W-4;j++){
-      string s = func(S[i][j],S[i][j+1],S[i][j+2],S[i][j+3],S[i][j+4]);
-      if ( s == "snuke" ) {
-        cout << i+1 << ' ' << j+1   << endl;
-        cout << i+1 << ' ' << j+1+1 << endl;
-        cout << i+1 << ' ' << j+1+2 << endl;
-        cout << i+1 << ' ' << j+1+3 << endl;
-        cout << i+1 << ' ' << j+1+4 << endl;
-        goto EOL;
-      }
-      else if ( s == "ekuns" ) {
-        cout << i+1 << ' ' << j+1+4 << endl;
-        cout << i+1 << ' ' << j+1+3 << endl;
-        cout << i+1 << ' ' << j+1+2 << endl;
-        cout << i+1 << ' ' << j+1+1 << endl;
-        cout << i+1 << ' ' << j+1   << endl;
-        goto EOL;
-      }
-    }
-  }
-  //
-  for(int i=0;i<H-4;i++){
-    for(int j=0;j<W;j++){
-      string s = func(S[i][j],S[i+1][j],S[i+2][j],S[i+3][j],S[i+4][j]);
-      if ( s == "snuke" ) {
-        cout << i+1   << ' ' << j+1 << endl;
-        cout << i+1+1 << ' ' << j+1 << endl;
-        cout << i+1+2 << ' ' << j+1 << endl;
-        cout << i+1+3 << ' ' << j+1 << endl;
-        cout << i+1+4 << ' ' << j+1 << endl;
-        goto EOL;
-      }
-      else if ( s == "ekuns" ) {
-        cout << i+1+4 << ' ' << j+1 << endl;
-        cout << i+1+3 << ' ' << j+1 << endl;
-        cout << i+1+2 << ' ' << j+1 << endl;
-        cout << i+1+1 << ' ' << j+1 << endl;
-        cout << i+1   << ' ' << j+1 << endl;
-        goto EOL;
-      }
-    }
-  }
-  //
-  for(int i=0;i<H-4;i++){
-    for(int j=0;j<W-4;j++){
-      string s = func(S[i][j],S[i+1][j+1],S[i+2][j+2],S[i+3][j+3],S[i+4][j+4]);
-      if ( s == "snuke" ) {
-        cout << i+1   << ' ' << j+1   << endl;
-        cout << i+1+1 << ' ' << j+1+1 << endl;
-        cout << i+1+2 << ' ' << j+1+2 << endl;
-        cout << i+1+3 << ' ' << j+1+3 << endl;
-        cout << i+1+4 << ' ' << j+1+4 << endl;
-        goto EOL;
-      }
-      else if ( s == "ekuns" ) {
-        cout << i+1+4 << ' ' << j+1+4 << endl;
-        cout << i+1+3 << ' ' << j+1+3 << endl;
-        cout << i+1+2 << ' ' << j+1+2 << endl;
-        cout << i+1+1 << ' ' << j+1+1 << endl;
-        cout << i+1   << ' ' << j+1   << endl;
-        goto EOL;
-      }
-    }
-  }
+	int H,W;
+	cin >> H >> W;
+	vector<vector<char>> S(H,vector<char>(W));
+	for(int i=0;i<H;i++){
+		for(int j=0;j<W;j++){
+			cin >> S[i][j];
+		}
+	}
+
+	vector<Point> dir = {
+		{-1,-1},
+		{-1, 0},
+		{-1, 1},
+		{ 0,-1},
+		{ 0, 1},
+		{ 1,-1},
+		{ 1, 0},
+		{ 1, 1},
+	};
+
+	for(int i=0;i<H;i++){
+		for(int j=0;j<W;j++){
+			for(Point d:dir){
+				string s(5,' ');
+				bool b = true;
+				Point p = {i,j};
+				for(int k=0;k<5;k++,p += d){
+					if ( ! ( p >= Point(0,0) && p < Point(H,W) ) ) {
+						b = false;
+						break;
+					}
+					s[k] = S[p.x][p.y];
+				}
+				if ( b && s == "snuke" ) {
+					p = {i,j};
+					for(int k=0;k<5;k++,p+=d){
+						cout << p.x + 1 << ' ' << p.y + 1 << endl;
+					}
+					goto EOL;
+				}
+			}
+		}
+	}
 EOL:
   return 0;
 }
