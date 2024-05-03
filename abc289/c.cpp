@@ -1,44 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-	int N,M;
-	cin >> N >> M;
-	vector<set<int>> vec(M);
-	for(int i=0;i<M;i++){
-		int C;
-		cin >> C;
-		set<int> st;
-		for(int j=0;j<C;j++){
-			int a;
-			cin >> a;
-			st.insert(a);
-		}
-		vec[i] = st;
-	}
-	int ans = 0;
-	function<void(list<set<int>>&list,int)> dfs = [&](list<set<int>>&list,int v){
-		if ( v == M ) {
-			set<int> st;
-			for(auto itr:list){
-				set<int> st2 = itr;
-				for(auto itr2:st2){
-					st.insert(itr2);
-				}
-			}
-			if ( st.size() == N ) {
-				ans += 1;
-			}
-			return ;
-		}
-		dfs(list,v+1);
-		set<int> st = vec[v];
-		list.push_back(st);
-		dfs(list,v+1);
-		list.pop_back();
-		return;
-	};
-	list<set<int>> list;
-	dfs(list,0);
-	cout << ans << endl;
+  int N,M;
+  cin >> N >> M;
+  vector<vector<int>> vec(M,vector<int>());
+  for(int i=0;i<M;i++){
+    int c;
+    cin >> c;
+    vector<int> a(c);
+    for(int j=0;j<c;j++){
+      cin >> a[j];
+    }
+    vec[i] = a;
+  }
+  // 
+  int ans = 0;
+  int n = M;
+  // 0 から 2^n まで
+  for(int bit=0;bit<(1<<n);bit++){
+    set<int> st;
+    for(int i=0;i<n;i++){
+      // i 番目のbitが立っているかどうかを判定
+      int b = bit & (1<<i) ;
+      if ( b ) {
+        vector<int> &v = vec[i];
+        copy(v.begin(), v.end(), inserter(st, st.begin()));
+      }
+    }
+    if ( (int)st.size() == N ) {
+      ans += 1;
+    }
+  }
+  //
+  cout << ans << endl;
   return 0;
 }
