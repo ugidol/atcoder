@@ -14,3 +14,6 @@ atcoder用
 ## abc264 D 
 ### "redocta".swap(i,i+1)
 * BFS, Fenwick Tree, Binary Indexed Tree, Bubble Sort
+
+## abc353 C
+* 尺取法, 二分探索
