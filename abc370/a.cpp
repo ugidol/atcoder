@@ -3,13 +3,19 @@ using namespace std;
 int main(void){
 	int L,R;
 	cin >> L >> R ;
-	string ans = "Invalid";
-	if ( L == 1 && R == 0 ) {
-		ans = "Yes";
-	}
-	else if ( L == 0 && R == 1 ) {
-		ans = "No";
+	int v = ( L << 1 ) | R ;
+	string ans ;
+	switch(v){
+		case 1:
+			ans = "No";
+			break;
+		case 2:
+			ans = "Yes";
+			break;
+		default:
+			ans = "Invalid";
+			break;
 	}
 	cout << ans << endl;
-  return 0;
+	return 0;
 }
