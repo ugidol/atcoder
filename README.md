@@ -21,3 +21,9 @@ atcoder用
 
 ## abc353 C
 * 尺取法, 二分探索
+
+## abc369 D
+* DP
+
+## abc370 D
+* Union-Find, 行列で分けて管理
