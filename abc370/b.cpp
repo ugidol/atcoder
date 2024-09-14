@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <sstream>
 using namespace std;
 
 #ifdef DEBUG
@@ -10,11 +12,11 @@ std::string format(const std::string& fmt, Args ... args){
 	return std::string(&buff[0], &buff[0]+len);
 }
 void debug(vector<int> &vec){
-	string s;
-  for(int i=0;i<(int)vec.size();i++){
-		s += format("%d,",vec[i]);
-  }
-	cerr << s << endl;
+	std::stringstream ss;
+	for(int i=0;i<(int)vec.size();i++){
+		ss << format("%d,",vec[i]);
+	}
+	cerr << ss.str() << endl;
 }
 #endif
 
@@ -22,10 +24,11 @@ int main(void){
 	int N;
 	cin >> N;
 	vector<vector<int>> A(N,vector<int>(N));
-	for(int i=0;i<N;i++){
-		for(int j=0;j<=i;j++){
-			cin >> A[i][j] ;
-			A[j][i] = A[i][j];
+	for(int col=0;col<N;col++){
+		for(int row=0;row<=col;row++){
+			cin >> A[col][row] ;
+			A[col][row] -= 1; // 0-based にする
+			A[row][col] = A[col][row]; // 対称行列の値
 		}
 	}
 #ifdef DEBUG
@@ -33,10 +36,11 @@ int main(void){
 		debug(A[i]);
 	}
 #endif
-	int i=0;
-	for(int j=0;j<N;j++){
-		i = A[i][j] - 1 ;
+	// solve problem
+	int current=0;
+	for(int next=0;next<N;next++){
+		current = A[current][next] ;
 	}
-	cout << (i+1) << endl;
+	cout << (current+1) << endl;
 	return 0;
 }
