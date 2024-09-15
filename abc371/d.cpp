@@ -1,49 +1,49 @@
-#include <bits/stdc++.h>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 using namespace std;
 int main(void){
+	// 入力
 	int N;
 	cin >> N;
-	vector<long> X(N+2);
-	X[0] = -1*((long)1e9+1);
+	// Xはlower_bound()するから、
+	// 最小値と最大値の番兵を入れておく
+	vector<long long> X(N+2);
+	X[0]   = (long long)-1e9-1; // 最小値の番兵
+	X[N+1] = (long long) 1e9+1; // 最大値の番兵
 	for(int i=1;i<=N;i++){
 		cin >> X[i];
 	}
-	X[N+1] = (long)1e9+1;
-	vector<long> P(N+2);
-	vector<long> sum(N+2);
-	P[0] = 0;
-	sum[0] = 0;
+
+	// XがN+2なので、
+	// Pと累積和用の配列もN+2にしておく
+	vector<long long> P(N+2,0);
+	vector<long long> sum(N+2,0);
 	for(int i=1;i<=N;i++){
 		cin >> P[i];
 		sum[i] = sum[i-1] + P[i];
 	}
-	P[N+1] = 0;
-	sum[N+1] = sum[N];
 	int Q;
 	cin >> Q;
 	for(int i=0;i<Q;i++){
-		long L,R;
+		long long L,R;
 		cin >> L >> R;
-		size_t l = 0;
-		{
-			auto itr = lower_bound(X.begin(),X.end(),L);
-			if ( itr != X.begin() ){
-				itr--;
-			}
-			l = distance(X.begin(), itr);
-		}
-		size_t r = 0;
-		{
-			auto itr = lower_bound(X.begin(),X.end(),R);
-			if ( R < *itr ) {
-				itr--;
-			}
-			r = distance(X.begin(), itr);
-		}
+		// 累積和は
+		// ary[R] - ary[L-1] が基本
+		// なので、Lはlower_bound()してイテレータを-1する
+		auto itr_l = lower_bound(X.begin(),X.end(),L) - 1;
+		size_t l = distance(X.begin(), itr_l);
+		// Rはlower_bound()してRよりも大きい値だったらイテレータを-1する...
+		// って思ったけどupper_bound()してイテレータを-1するのと同じと思った
+		auto itr_r = upper_bound(X.begin(),X.end(),R) - 1;
+		size_t r = distance(X.begin(), itr_r);
 #ifdef DEBUG
-		fprintf(stderr,"LR={%ld,%ld},lr=[%ld,%ld]\n",L,R,l,r);
+		cerr << "LR={" << L << "," << R << "}"
+			<< "lr={" << l << "," << r << "}" << endl;
 #endif
-		long ans = sum[r] - sum[l];
+
+		// 累積和の計算
+		long long ans = sum[r] - sum[l];
 		cout << ans << endl;
 	}
 	return 0;
