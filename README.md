@@ -42,3 +42,6 @@ atcoder用
 
 ## abc372 D
 * 累積MAX
+
+## abc375 C
+* 二次元配列の回転
