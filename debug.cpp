@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+
 #ifdef DEBUG
 template <typename ... Args>
 std::string format(const std::string& fmt, Args ... args){
@@ -11,8 +12,8 @@ std::string format(const std::string& fmt, Args ... args){
 }
 void debug(vector<int> &vec){
 	std::stringstream ss;
-	for(int i=0;i<(int)vec.size();i++){
-		ss << format("%d,",vec[i]);
+	for(auto &v:vec){
+		ss << format("%4ld,",v);
 	}
 	cerr << ss.str() << endl;
 }
