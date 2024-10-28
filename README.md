@@ -63,3 +63,6 @@ atcoder用
 
 ## abc376 D
 * BFS
+
+## abc377 D
+* 尺取法, Rを固定
