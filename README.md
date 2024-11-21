@@ -69,3 +69,6 @@ atcoder用
 
 ## abc378 D
 * DFS
+
+## abc380 D
+* 二分探索木
