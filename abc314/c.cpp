@@ -27,17 +27,15 @@ int main(void){
 		vec[i] = i;
 	}
 	//
+	string ans(N,' ');
 	for(int c=0;c<M;c++){
 		vector<int> v = mp[c];
-		for(int j=0;j<(int)v.size();j++){
+		int k = (int)v.size();
+		for(int j=0;j<k;j++){
 			int from = v[j];
-			int to   = v[(j+v.size()-1)%v.size()];
-			vec[from] = to;
+			int to   = v[(j+1)%k];
+			ans[to] = S[from];
 		}
-	}
-	string ans(N,' ');
-	for(int i=0;i<N;i++){
-		ans[i] = S[ vec[i] ];
 	}
 	cout << ans << endl;
   return 0;
