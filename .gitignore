@@ -1,0 +1,9 @@
+.vscode
+Makefile
+run.sh
+a
+b
+c
+d
+*.in.*
+*.out.*
