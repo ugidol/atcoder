@@ -1,42 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool func(string &s1, string &s2){
-  string s = s1 + s2 ;
-  for(int i=0;i<(int)s.size()/2;i++){
-    if ( s[i] == s[s.size()-1-i] ) {
-      continue;
-    }
-    else {
-      return false;
-    }
-  }
-  return true;
-}
 int main(void){
   int N;
   cin >> N;
-  vector<string> S(N);
+  vector<string> vec(N);
   for(int i=0;i<N;i++){
-    string s;
-    cin >> s;
-    S[i] = s;
+    cin >> vec[i];
   }
   string ans = "No";
   for(int i=0;i<N;i++){
-    for(int j=i+1;j<N;j++){
-      bool b = func(S[i],S[j]);
-      if ( b ) {
-        ans = "Yes";
-        goto eol;
+    for(int j=0;j<N;j++){
+      if ( i == j ) {
+        continue;
       }
-      b = func(S[j],S[i]);
+      string ss = vec[i] + vec[j];
+      //
+      bool b = true;
+      for(int k=0;k<(int)ss.size()/2;k++){
+        if ( ss[k] != ss[ss.size()-1-k] ) {
+          b = false;
+          break;
+        }
+      }
       if ( b ) {
         ans = "Yes";
-        goto eol;
       }
     }
   }
-eol:
   cout << ans << endl;
   return 0;
 }
