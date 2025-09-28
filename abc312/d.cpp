@@ -8,15 +8,15 @@ int main(void){
   for(int i=0;i<(int)S.size();i++){
     char c = S[i];
     for(int j=0;j<(int)S.size();j++){
-      if ( c == '(' ) {
-        dp[i+1][j+1] += dp[i][j];
-        dp[i+1][j+1] %= 998244353;
-      }
-      else if ( c == ')' ) {
+      if ( c == ')' ) {
         if ( j > 0 ) {
           dp[i+1][j-1] += dp[i][j];
           dp[i+1][j-1] %= 998244353;
         }
+      }
+      else if ( c == '(' ) {
+        dp[i+1][j+1] += dp[i][j];
+        dp[i+1][j+1] %= 998244353;
       }
       else {
         dp[i+1][j+1] += dp[i][j];
