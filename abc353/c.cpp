@@ -1,15 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long pow(long base,long x){
-	long v = 1;
-	for(int i=0;i<x;i++){
-		v *= base;
-	}
-	return v;
-}
-
 int main(void){
+	// 定数(10^8 = 1e8)
+	const long M = (long)1e8;
 	int N;
 	cin >> N;
 	vector<long> A(N);
@@ -19,9 +13,9 @@ int main(void){
 	//
 	long ans = 0;
 	for(int i=0;i<N;i++){
-		ans += A[i];
+		ans += ( A[i] * (N-1) );
 	}
-	ans *= (N-1);
+	// 
 	sort(A.begin(), A.end());
 	// ---------------------------------------------------------------------------
 	// 尺取法で解く.
@@ -32,13 +26,12 @@ int main(void){
 		// 左端から順にループ
 		for(int i=0;i<N;i++){
 			int left  = i;
-			right = max(right,i+1);
-			while(left<right-1&&A[left]+A[right-1]>=(long)1e8){
+			while(right>i&&A[left]+A[right-1]>=M){
 				right -= 1;
 			}
-			num += ( N - right );
+			num += ( N - max(i+1,right) );
 		}
-		ans -= ( num * (long)1e8 );
+		ans -= ( num * M );
 	};
 	// ---------------------------------------------------------------------------
 	// 二分探索で解く.
@@ -50,7 +43,7 @@ int main(void){
 			long right = N;
 			while(abs(right-left)>1){
 				long mid = ( left + right ) / 2;
-				if ( A[i]+A[mid]>=(long)1e8 ) {
+				if ( A[i]+A[mid]>=M ) {
 					right = mid;
 				}
 				else {
@@ -59,7 +52,7 @@ int main(void){
 			}
 			num += (N-right);
 		}
-		ans -= ( num * (long)1e8 );
+		ans -= ( num * M);
 	};
 	solve1();
 	cout << ans << endl;

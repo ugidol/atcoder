@@ -29,20 +29,20 @@ int main(void){
     return ret;
   };
   long long ans = 0;
-  long long left = mn;
-  long long right = mx + 1;
+  long long left = mn-1;
+  long long right = mx;
   long long mid = ( left + right ) / 2 ;
-  while(left<right){
+  while(abs(right-left)>1){
     mid = ( left + right ) / 2 ;
     long long m = f(mid);
     if ( m > M ) {
-      left = mid + 1;
+      left = mid;
     }
     else {
       right = mid;
     }
   }
-  ans = left;
+  ans = right;
   cout << ans << endl;
   return 0;
 }

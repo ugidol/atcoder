@@ -40,16 +40,15 @@ int main(void){
   map<long long,long long> mp;
   for(int i=0;i<N;i++){
     int x = f( A[i] ) ;
-#ifdef DEBUG
-    fprintf(stderr,"A[i]=%d,x=%d\n",A[i],x);
-#endif
-    if ( x == 0 ) {
-      ans += i;
+    mp[x] += 1;
+  }
+  for(auto itr:mp){
+    if ( itr.first == 0 ) {
+      ans += ( ( (long)N * ( (long)N - 1 ) / 2 ) - ( ( ( (long)N - itr.second ) * ( (long)N - itr.second - 1 ) ) / 2 ) );
     }
     else {
-      ans += ( mp[0] + mp[x] ) ;
+      ans += ( ( itr.second * ( itr.second - 1 ) ) / 2 ) ;
     }
-    mp[x] += 1;
   }
   cout << ans << endl;
   return 0;

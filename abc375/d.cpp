@@ -5,7 +5,7 @@ int main(void){
 	cin >> S;
 	map<char,vector<int>> mp;
 	for(char c='A';c<='Z';c++){
-		mp[c].resize(S.size()+1);
+		mp[c].assign(S.size()+1,0);
 	}
 	for(int i=1;i<=S.size();i++){
 		char s = S[i-1];
