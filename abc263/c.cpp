@@ -1,34 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-int main(void){
-  int N,M;
-  cin >> N >> M;
-  vector<vector<int>> ans;
-  //
-  function<void(vector<int>)> f = [&](vector<int> vec){
-    if ( (int)vec.size() == N ) {
-      ans.push_back(vec);
-      return ;
-    }
-    int v = 0;
-    if ( vec.size() > 0 ) {
-      v = vec[ vec.size()-1 ];
-    }
-    for(int i=v+1;i<=M;i++){
-      vec.push_back(i);
-      f(vec);
-      vec.pop_back();
-    }
-    return ;
-  };
-  vector<int> vec;
-  f(vec);
-  //
-  for(auto v:ans){
-    for(auto itr:v){
-      cout << itr << ' ';
+int N,M;
+void dump(deque<int> &stk){
+    for(auto it : stk ) {
+        cout << it << ' ';
     }
     cout << endl;
-  }
-  return 0;
+    return ;
+}
+void func(deque<int> &stk, int v){
+    if ( stk.size() == (unsigned long)N ) {
+        dump(stk);
+        return ;
+    }
+    //
+    for(int i=v+1;i<=M;i++){
+        stk.push_back(i);
+        func(stk, i);
+        stk.pop_back();
+    }
+    return ;
+}
+int main(void){
+    cin >> N >> M;
+    //
+    deque<int> stk;
+    func(stk,0);
+    return 0;
 }

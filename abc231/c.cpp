@@ -1,19 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-  int N,Q;
-  cin >> N >> Q ;
-  vector<long long> A(N);
-  for(auto &itr:A){
-    cin >> itr;
+  int n,q;
+  cin >> n >> q;
+  vector<int> vec(n);
+  for(int i=0;i<n;i++){
+    cin >> vec[i];
   }
-  sort(A.begin(), A.end());
-  for(int i=0;i<Q;i++){
-    long long x;
+  //
+  sort(vec.begin(), vec.end());
+  for(int i=0;i<q;i++){
+    int x;
     cin >> x;
-    auto itr = lower_bound(A.begin(), A.end(), x);
-    long long ans = distance(itr,A.end());
-    cout << ans << endl;
+    auto it = lower_bound(vec.begin(), vec.end(), x);
+    cout << distance(it, vec.end() ) << endl;
   }
   return 0;
 }

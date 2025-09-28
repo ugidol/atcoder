@@ -1,13 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-  long long A,B,K;
-  cin >> A >> B >> K;
-  long long cnt = 0;
-  while(A<B){
-    A *= K;
-    cnt += 1;
-  }
-  cout << cnt << endl;
-  return 0;
+    long int a , b , k;
+    cin >> a >> b >> k;
+    long int ans = 0;
+    for(int i=0;i<100000000;i++){
+        if ( a >= b ) {
+            ans = i;
+            break;
+        }
+        a *= k;
+    }
+    cout << ans << endl;
+    return 0;
 }

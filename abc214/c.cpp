@@ -1,27 +1,46 @@
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std ;
+
+void func(int i, long n, vector<long> &s, vector<long> &t){
+  //
+  int next = i + 1 ;
+  if ( next >= n ) {
+    next = 0;
+  }
+  //
+  if ( s[i] + t[i] >= t[next] ) {
+    return ;
+  }
+  //
+  t[next] = s[i] + t[i];
+  func(next, n, s, t);
+}
+
 int main(void){
-  int N;
-  cin >> N;
-  vector<int> S(N);
-  for(int i=0;i<N;i++){
-    cin >> S[i];
+  long n ;
+  /* N */
+  cin >> n ;
+  /* S */
+  vector<long> S(n);
+  for(int i=0;i<n;i++){
+    long s ;
+    cin >> s ;
+    S[i] = s;
   }
-  vector<int> T(N);
-  for(int i=0;i<N;i++){
-    cin >> T[i];
+  /* T */
+  vector<long> T(n);
+  for(int i=0;i<n;i++){
+    long t;
+    cin >> t;
+    T[i] = t;
   }
-  auto itr = min_element(T.begin(), T.end());
-  size_t idx = distance(T.begin(), itr);
-  vector<int> ans(N);
-  ans[idx] = T[idx];
-  for(int i=0;i<N-1;i++){
-    size_t prev = idx;
-    idx = ( idx + 1 ) % N ;
-    ans[idx] = min(T[idx], ans[prev] + S[prev] );
+  func(0, n, S, T);
+  for(int i=0;i<n;i++){
+    func(i,n,S,T);
   }
-  for(int i=0;i<N;i++){
-    cout << ans[i] << endl;
+  //
+  for(int i=0;i<n;i++){
+    cout << T[i] << endl;
   }
   return 0;
 }

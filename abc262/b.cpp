@@ -1,37 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-  int N,M;
-  cin >> N >> M;
-  vector<vector<int>> G(N,vector<int>());
-  for(int i=0;i<M;i++){
-    int U,V;
-    cin >> U >> V;
-    U -= 1;
-    V -= 1;
-    G[U].push_back({V});
-    G[V].push_back({U});
-  }
-  int ans = 0;
-  for(int i=0;i<N;i++){
-    int a = i;
-    for(int j=i+1;j<N;j++){
-      int b = j;
-      if ( find(G[i].begin(), G[i].end(), b) == G[i].end() ) {
-        continue;
-      }
-      for(int k=j+1;k<N;k++){
-        int c = k;
-        if ( find(G[j].begin(), G[j].end(), c) == G[j].end() ) {
-          continue;
+    int N,M;
+    cin >> N >> M;
+    map<int,vector<int>> mp;
+    for(int i=0;i<M;i++){
+        int u,v;
+        cin >> u >> v;
+        if ( u > v ) {
+            swap(u,v);
         }
-        if ( find(G[k].begin(), G[k].end(), a) == G[k].end() ) {
-          continue;
-        }
-        ans += 1;
-      }
+        mp[u].push_back(v);
+        mp[v].push_back(u);
     }
-  }
-  cout << ans << endl;
-  return 0;
+    int ans = 0;
+    for(auto it : mp){
+        int a = it.first;
+        vector<int> b_vec = it.second;
+        for(auto b : b_vec){
+            if ( a >= b ) {
+                continue;
+            }
+            vector<int> c_vec = mp[b];
+            for(auto c : c_vec ) {
+                if ( b >= c ) {
+                    continue;
+                }
+                vector<int> d_vec = mp[c];
+                for(auto d : d_vec ) {
+                    if ( a == d ) {
+                        ans += 1;
+                    }
+                }
+            }
+        }
+    }
+    //
+    cout << ans << endl;
+    //
+    return 0;
 }

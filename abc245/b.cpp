@@ -1,26 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-  int N;
-  cin >> N;
-  vector<int> A(N);
-  for(int i=0;i<N;i++){
-    cin >> A[i];
-  }
-  int ans = 0;
-  for(int i=0;i<=2000;i++){
-    bool b = true;
-    for(auto a:A){
-      if ( i == a ) {
-        b = false;
-        break;
-      }
+    int N;
+    cin >> N;
+    vector<int> vec(N);
+    for(int i=0;i<N;i++){
+        cin >> vec[i];
     }
-    if ( b ) {
-      ans = i;
-      break;
+    sort(vec.begin(),vec.end());
+    int ans = 0;
+    for(size_t i=0;i<vec.size();i++){
+        if ( ans < vec[i] ) {
+            break;
+        }
+        if ( ans == vec[i] ) {
+            ans += 1;
+            continue;
+        }
+        if ( ans > vec[i] ) {
+            continue;
+        }
     }
-  }
-  cout << ans << endl;
-  return 0;
+    cout << ans << endl;
+    return 0;
 }

@@ -1,25 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main(void){
-  int N,X;
-  cin >> N >> X ;
-  X -= 1;
-  vector<int> A(N);
-  for(int i=0;i<N;i++){
-    cin >> A[i];
-    A[i] -= 1;
-  }
-  set<int> visited;
-  function<int(int)> dfs = [&](int x){
-    visited.insert(x);
-    int next = A[x];
-    if ( visited.find(next) == visited.end() ) {
-      dfs(next);
+    int n, x;
+    cin >> n >> x ;
+    vector<int> vec(n);
+    for(int i=0;i<n;i++){
+        cin >> vec[i] ;
     }
+    vector<bool> vec2(n);
+    for(int i=0;i<n;i++){
+        vec2[i] = false;
+    }
+    //
+    int idx = x - 1;
+    while(true){
+        vec2[idx] = true;
+        int value = vec[idx] - 1;
+        if ( vec2[value] ) {
+            break;
+        }
+        idx = value;
+    }
+    cout << count(vec2.begin(), vec2.end(), true) << endl; 
     return 0;
-  };
-  dfs(X);
-  int ans = visited.size();
-  cout << ans << endl;
-  return 0;
 }
