@@ -6,45 +6,30 @@ int main(void){
 	#endif
 	int Q;
 	cin >> Q;
-	stack<int> opn;
-	stack<int> cls;
-	stack<int> stk;
-	opn.push(0);
-	cls.push(0);
+	stack<int> A;
+	stack<int> B;
+	A.push(0);
+	B.push(0);
 	for(int i=0;i<Q;i++){
-		int q;
-		cin >> q;
-		if ( q == 1 ) {
-			char c;
+		int a;
+		cin >> a;
+		if ( a == 1 ) {
+			char c ;
 			cin >> c;
-			if ( c == '('){
-				opn.push(i+1);
-				stk.push(i+1);
-			}
-			else {
-				cls.push(i+1);
-				if ( ! stk.empty() ) {
-					stk.pop();
-				}
-			}
+			int v = c == '(' ? +1 : -1 ;
+			A.push( A.top() + v  );
+			int mn = std::min(B.top(),A.top());
+			B.push( mn ) ;
 		}
 		else {
-			if ( opn.top() > cls.top() ) {
-				opn.pop();
-			}
-			else {
-				cls.pop();
-			}
+			A.pop();
+			B.pop();
 		}
-		#ifdef DEBUG
-		fprintf(stderr,"[%d][%d]\n",opn.top(),cls.top());
-		#endif
-		if ( opn.size() == cls.size() && stk.size() == 0 ) {
-			cout << "Yes" << endl;
+		string ans = "No";
+		if ( A.top() == 0 && B.top() == 0 ) {
+			ans = "Yes";
 		}
-		else {
-			cout << "No" << endl;
-		}
+		cout <<ans << endl;
 	}
 	return 0;
 }
